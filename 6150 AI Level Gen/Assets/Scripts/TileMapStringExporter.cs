@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
 public class TileMapStringExporter : MonoBehaviour
@@ -11,22 +13,28 @@ public class TileMapStringExporter : MonoBehaviour
     public List<Tile> tiles;
     public TileCharMap tileCharMap;
 
+    public int maxXBound = 250;
+    public int maxYBound = 16;
+
+    public EventSystem eventSystem;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // eventSystem.
+        Tilemap.tilemapTileChanged += TestIn;
     }
 
     // Update is called once per frame
     void Update()
     {
-
     }
 
     [ContextMenu("Export Tiles As String")]
     public void ExportAsString()
     {
         tilemap.CompressBounds();
-        
+
         List<string> result = new List<string>();
 
         String output = "";
@@ -81,5 +89,18 @@ public class TileMapStringExporter : MonoBehaviour
         }
 
     }
-}
 
+    public void TestIn(Tilemap tilemap, Tilemap.SyncTile[] syncTiles)
+    {
+        tilemap.CompressBounds();
+        Debug.Log("TestIn called");
+        Debug.Log(tilemap.cellBounds.max.x + " " + tilemap.cellBounds.min.x);
+        Debug.Log(tilemap.cellBounds.max.y + " " + tilemap.cellBounds.min.y);
+        if (tilemap.cellBounds.max.x > maxXBound || tilemap.cellBounds.max.y > maxYBound)
+        {
+            Debug.LogError("Tilemap bounds exceed maximum allowed size.");
+
+
+        }
+    }
+}
