@@ -22,7 +22,7 @@ public class TileMapStringExporter : MonoBehaviour
 
     static TileMapStringExporter()
     {
-        EditorApplication.update += SetTestIn;
+        EditorApplication.update += EnableBoundaryFunction;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,14 +36,15 @@ public class TileMapStringExporter : MonoBehaviour
     {
     }
 
-    static void SetTestIn()
+    //Enables the boundary function once the editor is done loading
+    static void EnableBoundaryFunction()
     {
         var exporter = UnityEngine.Object.FindAnyObjectByType<TileMapStringExporter>();
         Debug.Log("Loaded TileMapStringExporter");
-        if (exporter != null) 
+        if (exporter != null)
         {
-            Tilemap.tilemapTileChanged += exporter.TestIn;
-             EditorApplication.update -= SetTestIn;
+            Tilemap.tilemapTileChanged += exporter.EnableBoundary;
+            EditorApplication.update -= EnableBoundaryFunction;
         }
     }
 
@@ -107,17 +108,48 @@ public class TileMapStringExporter : MonoBehaviour
 
     }
 
-    public void TestIn(Tilemap tilemap, Tilemap.SyncTile[] syncTiles)
+    // Function that checks if the tilemap bounds exceed the maximum allowed size.
+    //If so, deletes the excess tiles and logs an error.
+    public void EnableBoundary(Tilemap tilemap, Tilemap.SyncTile[] syncTiles)
     {
         tilemap.CompressBounds();
         Debug.Log("TestIn called");
-        Debug.Log(tilemap.cellBounds.max.x + " " + tilemap.cellBounds.min.x);
-        Debug.Log(tilemap.cellBounds.max.y + " " + tilemap.cellBounds.min.y);
-        if (tilemap.cellBounds.max.x > maxXBound || tilemap.cellBounds.max.y > maxYBound)
+        
+        if (tilemap.cellBounds.max.x > maxXBound || tilemap.cellBounds.max.y > maxYBound ||
+            tilemap.cellBounds.min.x < 0 || tilemap.cellBounds.min.y < 0)
         {
             Debug.LogError("Tilemap bounds exceed maximum allowed size.");
 
+            List<Vector3Int> toRemove = new List<Vector3Int>();
 
+            for (int y = tilemap.cellBounds.min.y; y < tilemap.cellBounds.max.y; y++)
+            {
+                for (int x = tilemap.cellBounds.min.x; x < tilemap.cellBounds.max.x; x++)
+                {
+                    Debug.Log(x + " " + y);
+                    if (x >= maxXBound || y >= maxYBound || x < 0 || y < 0)
+                    {
+                        var pos = new Vector3Int(x, y, 0);
+                        if (tilemap.HasTile(pos))
+                            toRemove.Add(pos);
+                    }
+                }
+            }
+
+            if (toRemove.Count > 0)
+            {
+                foreach (var pos in toRemove)
+                {
+                    tilemap.SetTile(pos, null);
+                }
+
+                tilemap.RefreshAllTiles();
+                Debug.LogError($"Tilemap bounds exceed maximum allowed size. Removed {toRemove.Count} tile(s) outside ({maxXBound}, {maxYBound}).");
+            }
+            else
+            {
+                Debug.Log("Tilemap bounds exceed limits but no tiles were found in the excess area to remove.");
+            }
         }
     }
 }
