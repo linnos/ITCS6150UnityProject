@@ -78,16 +78,36 @@ public class TileMapStringExporter : MonoBehaviour
     public void ExportAsString()
     {
         tilemap.CompressBounds();
+        Tilemap otherTilemap = null;
+        if (tilemap == collisionMap)
+        {
+            otherTilemap = noCollisionMap;
+        }
+        else
+        {
+            otherTilemap = collisionMap;
+            otherTilemap.CompressBounds();
+        }
 
         List<string> result = new List<string>();
 
         String output = "";
 
-        for (int y = tilemap.cellBounds.min.y; y < tilemap.cellBounds.max.y; y++)
+        for (int y = Math.Min(tilemap.cellBounds.min.y, otherTilemap.cellBounds.min.y); y < Math.Max(tilemap.cellBounds.max.y, otherTilemap.cellBounds.max.y); y++)
         {
-            for (int x = tilemap.cellBounds.min.x; x < tilemap.cellBounds.max.x; x++)
+            for (int x = Math.Min(tilemap.cellBounds.min.x, otherTilemap.cellBounds.min.x); x < Math.Max(tilemap.cellBounds.max.x, otherTilemap.cellBounds.max.x); x++)
             {
                 Tile tile = tilemap.GetTile<Tile>(new Vector3Int(x, y, 0));
+                if (tile != null)
+                {
+                    if (tileCharMap.tileCharMapEntries.Exists(entry => entry.tile == tile))
+                    {
+                        output += tileCharMap.tileCharMapEntries.Find(entry => entry.tile == tile).character;
+                    }
+                    continue;
+                }
+
+                tile = otherTilemap.GetTile<Tile>(new Vector3Int(x, y, 0));
                 if (tile != null)
                 {
                     if (tileCharMap.tileCharMapEntries.Exists(entry => entry.tile == tile))
