@@ -12,6 +12,10 @@ using UnityEngine.Tilemaps;
 public class TileMapStringExporter : MonoBehaviour
 {
     public Tilemap tilemap;
+    public Tilemap collisionMap;
+    public Tilemap noCollisionMap;
+    public static Tilemap staticCollisionMap;
+    public static Tilemap staticNoCollisionMap;
     public List<Tile> tiles;
     public TileCharMap tileCharMap;
 
@@ -22,6 +26,7 @@ public class TileMapStringExporter : MonoBehaviour
 
     static TileMapStringExporter()
     {
+        EditorApplication.update += SetStaticMaps;
         EditorApplication.update += EnableBoundaryFunction;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -36,6 +41,27 @@ public class TileMapStringExporter : MonoBehaviour
     {
     }
 
+    static void SetStaticMaps()
+    {
+        var exporter = UnityEngine.Object.FindAnyObjectByType<TileMapStringExporter>();
+        if (exporter != null)
+        {
+            if (exporter.collisionMap == null || exporter.noCollisionMap == null)
+            {
+                Debug.LogWarning("Set static maps");
+                return;
+            }
+
+            if (staticCollisionMap != null && staticNoCollisionMap != null)
+            {
+                staticCollisionMap = exporter.collisionMap;
+                staticNoCollisionMap = exporter.noCollisionMap;
+                EditorApplication.update -= SetStaticMaps;
+                return;
+            }
+
+        }
+    }
     //Enables the boundary function once the editor is done loading
     static void EnableBoundaryFunction()
     {
@@ -113,8 +139,16 @@ public class TileMapStringExporter : MonoBehaviour
     public void EnableBoundary(Tilemap tilemap, Tilemap.SyncTile[] syncTiles)
     {
         tilemap.CompressBounds();
-        Debug.Log("TestIn called");
-        
+        Tilemap otherTilemap = null;
+        if (tilemap == collisionMap)
+        {
+            otherTilemap = noCollisionMap;
+        }
+        else
+        {
+            otherTilemap = collisionMap;
+        }
+
         if (tilemap.cellBounds.max.x > maxXBound || tilemap.cellBounds.max.y > maxYBound ||
             tilemap.cellBounds.min.x < 0 || tilemap.cellBounds.min.y < 0)
         {
@@ -151,5 +185,19 @@ public class TileMapStringExporter : MonoBehaviour
                 Debug.Log("Tilemap bounds exceed limits but no tiles were found in the excess area to remove.");
             }
         }
+
+        otherTilemap.CompressBounds();
+        for (int y = tilemap.cellBounds.min.y; y < tilemap.cellBounds.max.y; y++)
+        {
+            for (int x = tilemap.cellBounds.min.x; x < tilemap.cellBounds.max.x; x++)
+            {
+                if (otherTilemap.HasTile(new Vector3Int(x, y, 0)))
+                {
+                    var pos = new Vector3Int(x, y, 0);
+                    tilemap.SetTile(pos, null);
+                }
+            }
+        }
+
     }
 }
