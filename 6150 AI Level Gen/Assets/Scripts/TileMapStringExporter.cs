@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Unity.Collections.LowLevel.Unsafe;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
+[InitializeOnLoad]
 public class TileMapStringExporter : MonoBehaviour
 {
     public Tilemap tilemap;
@@ -18,16 +20,31 @@ public class TileMapStringExporter : MonoBehaviour
 
     public EventSystem eventSystem;
 
+    static TileMapStringExporter()
+    {
+        EditorApplication.update += SetTestIn;
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         // eventSystem.
-        Tilemap.tilemapTileChanged += TestIn;
+        // Tilemap.tilemapTileChanged += TestIn;
     }
 
     // Update is called once per frame
     void Update()
     {
+    }
+
+    static void SetTestIn()
+    {
+        var exporter = UnityEngine.Object.FindAnyObjectByType<TileMapStringExporter>();
+        Debug.Log("Loaded TileMapStringExporter");
+        if (exporter != null) 
+        {
+            Tilemap.tilemapTileChanged += exporter.TestIn;
+             EditorApplication.update -= SetTestIn;
+        }
     }
 
     [ContextMenu("Export Tiles As String")]
