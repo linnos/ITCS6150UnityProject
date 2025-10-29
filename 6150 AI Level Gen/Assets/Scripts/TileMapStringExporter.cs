@@ -24,6 +24,8 @@ public class TileMapStringExporter : MonoBehaviour
 
     public EventSystem eventSystem;
 
+    public string importString = "";
+
     static TileMapStringExporter()
     {
         EditorApplication.update += SetStaticMaps;
@@ -117,7 +119,7 @@ public class TileMapStringExporter : MonoBehaviour
                 }
                 else
                 {
-                    output += "X";
+                    output += "-";
                 }
                 // if (tile != null && !tiles.Contains(tile))
                 // {
@@ -136,6 +138,53 @@ public class TileMapStringExporter : MonoBehaviour
         // {
         //     Debug.Log(tile.name);
         // }
+    }
+
+    [ContextMenu("Import Tiles From String")]
+    public void ImportTilesFromString()
+    {
+        tilemap.ClearAllTiles();
+        noCollisionMap.ClearAllTiles();
+        collisionMap.ClearAllTiles();
+
+        string input = importString;
+        if (string.IsNullOrEmpty(input))
+        {
+            Debug.LogError("No file selected.");
+            return;
+        }
+        string[] lines = input.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        Array.Reverse(lines);
+        for (int y = 0; y < lines.Length; y++)
+        {
+            string line = lines[y];
+            for (int x = 0; x < line.Length; x++)
+            {
+                char c = line[x];
+                if (c == '-')
+                {
+                    continue;
+                }
+
+                TileCharMap.TileCharMapEntry entry = tileCharMap.tileCharMapEntries.Find(e => e.character == c.ToString());
+                if (entry != null)
+                {
+                    if (entry.tile != null)
+                    {
+                        if (entry.tile.name.ToLower().Contains("trigger"))
+                        {
+                            noCollisionMap.SetTile(new Vector3Int(x, y, 0), entry.tile);
+                        }
+                        else
+                        {
+                            collisionMap.SetTile(new Vector3Int(x, y, 0), entry.tile);
+                        }
+
+                        Tilemap.tilemapTileChanged += EnableBoundary;
+                    }
+                }
+            }
+        }
     }
 
     [ContextMenu("Initialize Tile Char Map")]

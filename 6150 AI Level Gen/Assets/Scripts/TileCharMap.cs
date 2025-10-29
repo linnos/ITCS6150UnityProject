@@ -22,7 +22,13 @@ public class TileCharMap : MonoBehaviour
 
         foreach( TileCharMapEntry entry in tileCharMapEntries)
         {
+            if ((Convert.ToChar(unicode)).ToString() == "-")
+            {
+                unicode++;
+            }
+            
             entry.character = (Convert.ToChar(unicode)).ToString();
+            
             unicode++;
         }
     }
