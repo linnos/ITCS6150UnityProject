@@ -3,7 +3,7 @@
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController2D : MonoBehaviour
 {
-    public float moveSpeed = 6f;
+    public float moveSpeed = 9f;
     public float jumpForce = 12f;
     public Transform groundCheck;
     public float groundRadius = 0.1f;
@@ -12,7 +12,29 @@ public class PlayerController2D : MonoBehaviour
     Rigidbody2D rb;
     bool isGrounded;
 
-    void Awake() { rb = GetComponent<Rigidbody2D>(); }
+    Camera mainCam;
+    public Vector3 cameraOffset = new Vector3(0f, 1.5f, -10f);
+    public float cameraSmooth = 5f;
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+
+        // Find or create the main camera
+        if (Camera.main != null)
+        {
+            mainCam = Camera.main;
+        }
+        else
+        {
+            GameObject camObj = new GameObject("MainCamera");
+            camObj.tag = "MainCamera";
+            mainCam = camObj.AddComponent<Camera>();
+        }
+
+        // Position camera initially
+        mainCam.transform.position = transform.position + cameraOffset;
+    }
 
     void Update()
     {
@@ -52,4 +74,16 @@ public class PlayerController2D : MonoBehaviour
             LevelState.MarkUnplayable();
         }
     }
+
+    void LateUpdate()
+    {
+        if (mainCam != null)
+        {
+            Vector3 targetPos = transform.position + cameraOffset;
+            targetPos.z = cameraOffset.z; // keep z offset consistent
+            mainCam.transform.position = targetPos;
+        }
+    }
+
+
 }

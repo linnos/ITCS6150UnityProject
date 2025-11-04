@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LevelPlayBootstrapper : MonoBehaviour
 {
@@ -42,6 +42,13 @@ public class LevelPlayBootstrapper : MonoBehaviour
 
         var player = Instantiate(playerPrefab, startT ? startT.position : Vector3.zero, Quaternion.identity);
         LevelState.Init(player, startT, ui);
-        if (endZone) endZone.OnReachedEnd += () => ui.ShowLevelComplete();
+        if (endZone)
+        {
+            endZone.OnReachedEnd += () =>
+            {
+                Debug.Log("Player reached end zone  restarting level");
+                LevelState.Respawn();
+            };
+        }
     }
 }
