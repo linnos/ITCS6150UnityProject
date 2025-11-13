@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
@@ -181,8 +178,6 @@ public class TileMapStringExporter : MonoBehaviour
                         {
                             collisionMap.SetTile(new Vector3Int(x, y, 0), entry.tile);
                         }
-
-                        Tilemap.tilemapTileChanged += EnableBoundary;
                     }
                 }
             }
