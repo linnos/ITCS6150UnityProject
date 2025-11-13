@@ -26,6 +26,8 @@ public class TileMapStringExporter : MonoBehaviour
 
     public string importString = "";
 
+    public APIRequestHandler apiRequestHandler;
+
     static TileMapStringExporter()
     {
         EditorApplication.update += SetStaticMaps;
@@ -268,5 +270,15 @@ public class TileMapStringExporter : MonoBehaviour
             }
         }
 
+    }
+
+    [ContextMenu("Import Tiles From API")]
+    public void ImportTilesFromAPI()
+    {
+        // importString = apiRequestHandler.GetDatas();
+        StartCoroutine(apiRequestHandler.GetDatas());
+
+        Debug.Log("Importing tiles from API with data: " + importString);
+        ImportTilesFromString();
     }
 }

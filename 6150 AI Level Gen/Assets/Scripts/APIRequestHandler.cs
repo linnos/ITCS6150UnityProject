@@ -7,19 +7,20 @@ public class APIRequestHandler : MonoBehaviour
     // Api url example:
     // https://pokeapi.co/api/v2/pokemon/${pokemon}/
 
-    private string url = "https://pokeapi.co/api/v2/pokemon/ditto";
+    public string url = "http://127.0.0.1:8000/";
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(GetDatas());
+        
     }
 
     private void OnDestroy()
     {
     }
 
-    IEnumerator GetDatas()
+    
+    public IEnumerator GetDatas()
     {
 
         using (UnityWebRequest request = UnityWebRequest.Get(url))
@@ -35,7 +36,7 @@ public class APIRequestHandler : MonoBehaviour
             {
                 string json = request.downloadHandler.text;
                 SimpleJSON.JSONNode levelData = SimpleJSON.JSON.Parse(json);
-                Debug.Log(levelData);
+                Debug.Log(levelData[0]);
             }
         }
     }
