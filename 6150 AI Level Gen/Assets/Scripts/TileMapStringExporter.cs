@@ -30,6 +30,7 @@ public class TileMapStringExporter : MonoBehaviour
         EditorApplication.update += SetStaticMaps;
         EditorApplication.update += EnableBoundaryFunction;
     }
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

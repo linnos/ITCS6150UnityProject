@@ -35,7 +35,7 @@ public class LevelMarkerSpawner : MonoBehaviour
         SpawnFromMarkers();
     }
 
-    void SpawnFromMarkers()
+    public void SpawnFromMarkers()
     {
         var bounds = markerTilemap.cellBounds;
 
