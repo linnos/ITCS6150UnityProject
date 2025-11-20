@@ -67,7 +67,7 @@ public class TileMapStringExporter : MonoBehaviour
     static void EnableBoundaryFunction()
     {
         var exporter = UnityEngine.Object.FindAnyObjectByType<TileMapStringExporter>();
-        Debug.Log("Loaded TileMapStringExporter");
+        // Debug.Log("Loaded TileMapStringExporter");
         if (exporter != null)
         {
             Tilemap.tilemapTileChanged += exporter.EnableBoundary;
