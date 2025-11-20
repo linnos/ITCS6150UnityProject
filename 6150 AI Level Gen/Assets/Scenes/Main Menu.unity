@@ -739,6 +739,7 @@ GameObject:
   - component: {fileID: 915400712}
   - component: {fileID: 915400711}
   - component: {fileID: 915400710}
+  - component: {fileID: 915400713}
   m_Layer: 5
   m_Name: SnakingAndDepth
   m_TagString: Untagged
@@ -809,7 +810,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 915400711}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 915400713}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: OnGenerateLevelButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &915400711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -848,6 +861,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915400708}
   m_CullTransparentMesh: 1
+--- !u!114 &915400713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915400708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39998907425f04d41be8c3f068dcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: SnakingAndDepth
 --- !u!1 &1008371122
 GameObject:
   m_ObjectHideFlags: 0
@@ -1193,6 +1219,7 @@ GameObject:
   - component: {fileID: 1693739441}
   - component: {fileID: 1693739440}
   - component: {fileID: 1693739439}
+  - component: {fileID: 1693739442}
   m_Layer: 5
   m_Name: ColumnDepth
   m_TagString: Untagged
@@ -1263,7 +1290,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1693739440}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1693739442}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: OnGenerateLevelButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1693739440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1302,50 +1341,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1693739437}
   m_CullTransparentMesh: 1
---- !u!1 &1970252457
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1970252459}
-  - component: {fileID: 1970252458}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1970252458
+--- !u!114 &1693739442
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1970252457}
+  m_GameObject: {fileID: 1693739437}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39998907425f04d41be8c3f068dcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1970252459
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1970252457}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 418.64804, y: 206.79315, z: -2.6588395}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  level: ColumnDepth
 --- !u!1 &1975135640
 GameObject:
   m_ObjectHideFlags: 0
@@ -1358,6 +1366,7 @@ GameObject:
   - component: {fileID: 1975135644}
   - component: {fileID: 1975135643}
   - component: {fileID: 1975135642}
+  - component: {fileID: 1975135645}
   m_Layer: 5
   m_Name: NoModifiers
   m_TagString: Untagged
@@ -1428,7 +1437,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1975135643}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1975135645}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: OnGenerateLevelButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1975135643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1467,6 +1488,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1975135640}
   m_CullTransparentMesh: 1
+--- !u!114 &1975135645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1975135640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39998907425f04d41be8c3f068dcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: NoModifiers
 --- !u!1 &2111191485
 GameObject:
   m_ObjectHideFlags: 0
@@ -1479,6 +1513,7 @@ GameObject:
   - component: {fileID: 2111191489}
   - component: {fileID: 2111191488}
   - component: {fileID: 2111191487}
+  - component: {fileID: 2111191490}
   m_Layer: 5
   m_Name: Snaking
   m_TagString: Untagged
@@ -1549,7 +1584,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2111191488}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2111191490}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: OnGenerateLevelButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2111191488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1588,6 +1635,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2111191485}
   m_CullTransparentMesh: 1
+--- !u!114 &2111191490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111191485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39998907425f04d41be8c3f068dcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: Snaking
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1596,4 +1656,3 @@ SceneRoots:
   - {fileID: 240270120}
   - {fileID: 1008371126}
   - {fileID: 649114287}
-  - {fileID: 1970252459}

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,10 @@ using UnityEngine.Networking;
 
 public class MainMenu : MonoBehaviour
 {
+    public string level = "NoModifiers";
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        StartCoroutine(SendLevelGenerationRequest());
     }
 
     // Update is called once per frame
@@ -19,7 +20,7 @@ public class MainMenu : MonoBehaviour
     }
 
     [System.Serializable]
-    private class LevelRequest
+    public class LevelRequest
     {
         public string modelName = "NoModifiers";
         public int numChunks = 15;
@@ -30,6 +31,7 @@ public class MainMenu : MonoBehaviour
     private IEnumerator SendLevelGenerationRequest()
     {
         var requestObj = new LevelRequest();
+        requestObj.modelName = level;
         string json = JsonUtility.ToJson(requestObj);
         Debug.Log($"Generating Level... Request JSON: {json}");
 
@@ -55,9 +57,14 @@ public class MainMenu : MonoBehaviour
             {
                 SimpleJSON.JSONNode text = SimpleJSON.JSON.Parse(www.downloadHandler.text);
                 string[] cleanedString = text[1].ToString().Split("\\n");
-                string test = string.Join("\n", cleanedString);
-                Debug.Log($"Response: {test}..."); 
+                string joinedString = string.Join("\n", cleanedString);
+                Debug.Log($"Response: {joinedString}"); 
             }
         }
+    }
+
+    public void OnGenerateLevelButtonClicked()
+    {
+        StartCoroutine(SendLevelGenerationRequest());
     }
 }
