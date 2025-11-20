@@ -18,7 +18,7 @@ public class LevelPlayBootstrapper : MonoBehaviour
         else
         {
             // Raise spawn position slightly above the start marker
-            startT.position += new Vector3(0f, 0.5f, 0f);
+            startT.position += new Vector3(0f, 4.5f, 0f);
             Debug.Log($"Start position set to {startT.position}");
         }
 
