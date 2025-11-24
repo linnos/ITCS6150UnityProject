@@ -70,6 +70,7 @@ public class LevelMarkerSpawner : MonoBehaviour
                     endTransform ??= go.transform;
                     EnsureTagged(go, "End");
                     EnsureEndZone(go);
+                    spawnedObjects.Add(go);
                     if (clearMarkerTilesAfterSpawning) markerTilemap.SetTile(cell, null);
                 }
                 else if (tile == spikeTile)
