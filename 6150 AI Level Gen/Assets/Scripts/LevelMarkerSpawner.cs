@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.Experimental.AI;
 using UnityEngine.Tilemaps;
 
 public class LevelMarkerSpawner : MonoBehaviour
@@ -24,8 +27,11 @@ public class LevelMarkerSpawner : MonoBehaviour
     public Transform startTransform;    // First start found (for player spawn)
     public Transform endTransform;      // First end found
 
+    public List<GameObject> spawnedObjects = null;
+
     void Awake()
     {
+        spawnedObjects = new List<GameObject>();
         if (!markerTilemap)
         {
             Debug.LogError("LevelMarkerSpawner: Marker Tilemap is not assigned.");
@@ -70,6 +76,7 @@ public class LevelMarkerSpawner : MonoBehaviour
                     var go = Instantiate(spikePrefab, worldPos, Quaternion.identity, spawnedParent);
                     EnsureTagged(go, "Spike");
                     EnsureSpikeKill(go);
+                    spawnedObjects.Add(go);
                     if (clearMarkerTilesAfterSpawning) markerTilemap.SetTile(cell, null);
                 }
             }
@@ -83,6 +90,15 @@ public class LevelMarkerSpawner : MonoBehaviour
     {
         // Assumes you created these tags in Project Settings → Tags and Layers
         try { go.tag = tag; } catch { /* ignore if tag doesn't exist */ }
+    }
+
+    public void Clear()
+    {
+        foreach (var gameObject in spawnedObjects)
+        {
+            Destroy(gameObject);
+        }
+        spawnedObjects = new List<GameObject>();
     }
 
     void EnsureSpikeKill(GameObject go)

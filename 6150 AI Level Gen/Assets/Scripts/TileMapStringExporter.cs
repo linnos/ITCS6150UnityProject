@@ -25,6 +25,8 @@ public class TileMapStringExporter : MonoBehaviour
 
     public APIRequestHandler apiRequestHandler;
 
+    public LevelMarkerSpawner spawner;
+
     static TileMapStringExporter()
     {
         EditorApplication.update += SetStaticMaps;
@@ -182,6 +184,12 @@ public class TileMapStringExporter : MonoBehaviour
                     }
                 }
             }
+        }
+
+        if(spawner != null)
+        {
+            spawner.Clear();
+            spawner.SpawnFromMarkers();
         }
     }
 

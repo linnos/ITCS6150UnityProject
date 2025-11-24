@@ -376,6 +376,8 @@ MonoBehaviour:
     111111111
 
     <===>>>>?'
+  apiRequestHandler: {fileID: 0}
+  spawner: {fileID: 1470846805}
 --- !u!483693784 &63106567
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -4448,6 +4450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 245663ac1a437b14c98500fb14422d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  url: http://127.0.0.1:8000/
 --- !u!4 &74347412
 Transform:
   m_ObjectHideFlags: 0
@@ -5407,6 +5410,8 @@ MonoBehaviour:
     000000000
 
     ;<<<====>'
+  apiRequestHandler: {fileID: 0}
+  spawner: {fileID: 1470846805}
 --- !u!483693784 &1325765262
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -6846,6 +6851,7 @@ MonoBehaviour:
   spawnedParent: {fileID: 0}
   startTransform: {fileID: 0}
   endTransform: {fileID: 0}
+  spawnedObjects: []
 --- !u!4 &1470846806
 Transform:
   m_ObjectHideFlags: 0

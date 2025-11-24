@@ -73,6 +73,12 @@ public class PlayerController2D : MonoBehaviour
             Debug.Log("Unplayable key (U) pressed → marking level as unplayable");
             LevelState.MarkUnplayable();
         }
+
+        if(this.transform.position.y < 2f)
+        {
+            Debug.Log("Player fell out of bounds → respawning player");
+            LevelState.Respawn();
+        }
     }
 
     void LateUpdate()
