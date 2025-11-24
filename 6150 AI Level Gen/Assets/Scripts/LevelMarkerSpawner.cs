@@ -28,6 +28,7 @@ public class LevelMarkerSpawner : MonoBehaviour
     public Transform endTransform;      // First end found
 
     public List<GameObject> spawnedObjects = null;
+    public GameObject loadingImage;
 
     void Awake()
     {
@@ -84,6 +85,7 @@ public class LevelMarkerSpawner : MonoBehaviour
 
         if (!startTransform) Debug.LogWarning("LevelMarkerSpawner: No Start tile found.");
         if (!endTransform) Debug.LogWarning("LevelMarkerSpawner: No End tile found.");
+        loadingImage.SetActive(false);
     }
 
     void EnsureTagged(GameObject go, string tag)

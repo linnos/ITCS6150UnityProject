@@ -144,6 +144,9 @@ public class GameManager : MonoBehaviour
         {
             GenerateLevel();
             Debug.Log("No more levels in queue. Wait for level to load");
+            if(spawner != null){
+                spawner.loadingImage.SetActive(true);
+            }
         }
     }
 
